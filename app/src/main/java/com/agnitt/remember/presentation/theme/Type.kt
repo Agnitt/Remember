@@ -1,4 +1,4 @@
-package com.agnitt.remember.ui.theme
+package com.agnitt.remember.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
