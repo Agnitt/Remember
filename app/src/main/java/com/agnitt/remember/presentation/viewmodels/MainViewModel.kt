@@ -1,4 +1,8 @@
 package com.agnitt.remember.presentation.viewmodels
 
-class MainViewModel {
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+
+class MainViewModel(): ViewModel() {
+    val isDarkTheme = mutableStateOf(false) // add dynamic
 }

@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(msg: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hi, dorks! $msg T_T",
+        text = "$msg T_T",
         modifier = modifier,
         textAlign = TextAlign.Center
     )
