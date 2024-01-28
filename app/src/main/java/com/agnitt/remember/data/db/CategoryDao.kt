@@ -1,0 +1,84 @@
+package com.agnitt.remember.data.db
+
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Delete
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
+import android.arch.persistence.room.Update
+import com.agnitt.remember.common.CATEGORY_TABLE_NAME
+import com.agnitt.remember.common.FIELD_CATEGORY_COLOR
+import com.agnitt.remember.common.FIELD_CATEGORY_ICON_ID
+import com.agnitt.remember.common.FIELD_CATEGORY_ID
+import com.agnitt.remember.common.FIELD_CATEGORY_TITLE
+import com.agnitt.remember.models.data.db.CategoryEntity
+
+@Dao
+interface CategoryDao {
+
+    //region add
+    @Insert
+    suspend fun insert(vararg categories: CategoryEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWithReplace(vararg categories: CategoryEntity)
+
+    //endregion
+
+    //region get
+    @Query("SELECT * FROM $CATEGORY_TABLE_NAME ORDER BY $FIELD_CATEGORY_ID DESC")
+    suspend fun getAllOrderByID(): List<CategoryEntity>
+
+    @Query("SELECT * FROM $CATEGORY_TABLE_NAME ORDER BY $FIELD_CATEGORY_TITLE DESC")
+    suspend fun getAllOrderByTitle(): List<CategoryEntity>
+
+    @Query("SELECT * FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_ID = :id")
+    suspend fun getByID(id: Long): CategoryEntity
+
+    @Query("SELECT * FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_TITLE = :title")
+    suspend fun getByTitle(title: String): CategoryEntity
+
+    //endregion
+
+    //region upd
+    @Update
+    suspend fun update(vararg categories: CategoryEntity)
+
+    @Query(
+        "UPDATE $CATEGORY_TABLE_NAME SET " +
+                "$FIELD_CATEGORY_TITLE = :newTitle " +
+                "WHERE $FIELD_CATEGORY_ID = :id"
+    )
+    suspend fun updateTitle(id: Long, newTitle: String)
+
+    @Query(
+        "UPDATE $CATEGORY_TABLE_NAME SET " +
+                "$FIELD_CATEGORY_COLOR = :color " +
+                "WHERE $FIELD_CATEGORY_ID = :id"
+    )
+    suspend fun updateColor(id: Long, color: Int)
+
+    @Query(
+        "UPDATE $CATEGORY_TABLE_NAME SET " +
+                "$FIELD_CATEGORY_ICON_ID = :iconID " +
+                "WHERE $FIELD_CATEGORY_ID = :id"
+    )
+    suspend fun updateIcon(id: Long, iconID: Int)
+
+    //endregion
+
+    // region del
+    @Delete
+    suspend fun delete(vararg categories: CategoryEntity)
+
+    @Query("DELETE FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_ID = :id")
+    suspend fun deleteByID(id: Long)
+
+    @Query("DELETE FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_TITLE = :title")
+    suspend fun deleteByTitle(title: String)
+
+    @Query("DELETE FROM $CATEGORY_TABLE_NAME")
+    suspend fun clearAll()
+
+    //endregion
+}
