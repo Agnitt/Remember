@@ -9,14 +9,16 @@ import android.arch.persistence.room.Update
 import com.agnitt.remember.common.CATEGORY_TABLE_NAME
 import com.agnitt.remember.common.FIELD_CATEGORY_COLOR
 import com.agnitt.remember.common.FIELD_CATEGORY_ICON_ID
-import com.agnitt.remember.common.FIELD_CATEGORY_ID
+import com.agnitt.remember.common.FIELD_CATEGORY_INNER_ID
 import com.agnitt.remember.common.FIELD_CATEGORY_TITLE
 import com.agnitt.remember.models.data.db.CategoryEntity
+import android.database.sqlite.SQLiteConstraintException
 
 @Dao
 interface CategoryDao {
 
     //region add
+    /** @throws SQLiteConstraintException если есть категория с таким же тайтлом или id */
     @Insert
     suspend fun insert(vararg categories: CategoryEntity)
 
@@ -26,13 +28,13 @@ interface CategoryDao {
     //endregion
 
     //region get
-    @Query("SELECT * FROM $CATEGORY_TABLE_NAME ORDER BY $FIELD_CATEGORY_ID DESC")
+    @Query("SELECT * FROM $CATEGORY_TABLE_NAME ORDER BY $FIELD_CATEGORY_INNER_ID DESC")
     suspend fun getAllOrderByID(): List<CategoryEntity>
 
     @Query("SELECT * FROM $CATEGORY_TABLE_NAME ORDER BY $FIELD_CATEGORY_TITLE DESC")
     suspend fun getAllOrderByTitle(): List<CategoryEntity>
 
-    @Query("SELECT * FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_ID = :id")
+    @Query("SELECT * FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_INNER_ID = :id")
     suspend fun getByID(id: Long): CategoryEntity
 
     @Query("SELECT * FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_TITLE = :title")
@@ -47,21 +49,21 @@ interface CategoryDao {
     @Query(
         "UPDATE $CATEGORY_TABLE_NAME SET " +
                 "$FIELD_CATEGORY_TITLE = :newTitle " +
-                "WHERE $FIELD_CATEGORY_ID = :id"
+                "WHERE $FIELD_CATEGORY_INNER_ID = :id"
     )
     suspend fun updateTitle(id: Long, newTitle: String)
 
     @Query(
         "UPDATE $CATEGORY_TABLE_NAME SET " +
                 "$FIELD_CATEGORY_COLOR = :color " +
-                "WHERE $FIELD_CATEGORY_ID = :id"
+                "WHERE $FIELD_CATEGORY_INNER_ID = :id"
     )
     suspend fun updateColor(id: Long, color: Int)
 
     @Query(
         "UPDATE $CATEGORY_TABLE_NAME SET " +
                 "$FIELD_CATEGORY_ICON_ID = :iconID " +
-                "WHERE $FIELD_CATEGORY_ID = :id"
+                "WHERE $FIELD_CATEGORY_INNER_ID = :id"
     )
     suspend fun updateIcon(id: Long, iconID: Int)
 
@@ -71,7 +73,7 @@ interface CategoryDao {
     @Delete
     suspend fun delete(vararg categories: CategoryEntity)
 
-    @Query("DELETE FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_ID = :id")
+    @Query("DELETE FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_INNER_ID = :id")
     suspend fun deleteByID(id: Long)
 
     @Query("DELETE FROM $CATEGORY_TABLE_NAME WHERE $FIELD_CATEGORY_TITLE = :title")

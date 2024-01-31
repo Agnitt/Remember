@@ -17,11 +17,13 @@ import com.agnitt.remember.common.FIELD_ITEM_PER_TIME_QUANTITY
 import com.agnitt.remember.common.FIELD_ITEM_TITLE
 import com.agnitt.remember.common.ITEM_TABLE_NAME
 import com.agnitt.remember.models.data.db.ItemEntity
+import android.database.sqlite.SQLiteConstraintException
 
 @Dao
 interface ItemDao {
 
     //region add
+    /** @throws SQLiteConstraintException если есть айтем с таким же тайтлом */
     @Insert
     suspend fun insert(vararg items: ItemEntity)
 
@@ -61,10 +63,10 @@ interface ItemDao {
 
     @Query(
         "UPDATE $ITEM_TABLE_NAME SET " +
-                "$FIELD_ITEM_CATEGORY_ID = :category " +
+                "$FIELD_ITEM_CATEGORY_ID = :categoryID " +
                 "WHERE $FIELD_ITEM_TITLE = :title"
     )
-    suspend fun updateCategory(title: String, category: String)
+    suspend fun updateCategory(title: String, categoryID: Long)
 
     @Query(
         "UPDATE $ITEM_TABLE_NAME SET " +
@@ -114,10 +116,10 @@ interface ItemDao {
 
     //region other
     @Query("SELECT EXISTS (SELECT * FROM $ITEM_TABLE_NAME WHERE $FIELD_ITEM_TITLE = :title)")
-    suspend fun exist(title: String)
+    suspend fun exist(title: String): Boolean
 
     @Query("SELECT COUNT($FIELD_ITEM_CATEGORY_ID) FROM $ITEM_TABLE_NAME")
-    suspend fun countByCategory(categoryID: Long)
+    suspend fun countByCategory(categoryID: Long): Int
 
     @Query(
         "UPDATE $ITEM_TABLE_NAME SET " +

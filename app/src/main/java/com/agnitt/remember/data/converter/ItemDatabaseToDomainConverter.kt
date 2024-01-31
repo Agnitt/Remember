@@ -3,7 +3,7 @@ package com.agnitt.remember.data.converter
 import com.agnitt.remember.models.data.db.ItemEntity
 import com.agnitt.remember.models.domain.Item
 
-class ItemDatabaseToDomainConverter {
+internal class ItemDatabaseToDomainConverter {
 
     fun convert(from: ItemEntity): Item = Item(
         title = from.title,

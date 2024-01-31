@@ -1,13 +1,15 @@
 package com.agnitt.remember.domain
 
 import com.agnitt.remember.models.domain.Item
+import android.database.sqlite.SQLiteConstraintException
 
 interface ItemsRepository {
-    suspend fun add(item: Item)
+
+    /** @throws SQLiteConstraintException если есть айтем с таким же тайтлом и флаг replace false */
+    suspend fun add(item: Item, replace: Boolean = false)
     suspend fun getAll(): List<Item>
     suspend fun getActualItems(): List<Item>
     suspend fun getArchive(): List<Item>
-    suspend fun getItemByID(id: Long): Item
     suspend fun getItemByTitle(title: String): Item
     suspend fun getByCategory(categoryID: Long): List<Item>
     suspend fun update(item: Item)
@@ -20,8 +22,8 @@ interface ItemsRepository {
     suspend fun deleteByCategory(categoryID: Long)
     suspend fun clearArchive()
     suspend fun clearAll()
-    suspend fun exist(title: String)
-    suspend fun countItemsInCategory(categoryID: Long)
+    suspend fun exist(title: String): Boolean
+    suspend fun countItemsInCategory(categoryID: Long): Int
     suspend fun archive(title: String)
     suspend fun unarchive(title: String)
 }
