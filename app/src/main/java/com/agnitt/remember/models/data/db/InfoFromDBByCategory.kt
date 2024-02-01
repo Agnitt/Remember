@@ -1,7 +1,7 @@
 package com.agnitt.remember.models.data.db
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Relation
+import androidx.room.Embedded
+import androidx.room.Relation
 import com.agnitt.remember.common.FIELD_CATEGORY_ID
 import com.agnitt.remember.common.FIELD_CATEGORY_INNER_ID
 import com.agnitt.remember.common.FIELD_ITEM_CATEGORY_ID
