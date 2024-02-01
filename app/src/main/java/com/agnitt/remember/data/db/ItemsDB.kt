@@ -1,8 +1,8 @@
 package com.agnitt.remember.data.db
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import android.content.Context
 import com.agnitt.remember.common.ITEM_DB_NAME
 import com.agnitt.remember.models.data.db.ItemEntity
