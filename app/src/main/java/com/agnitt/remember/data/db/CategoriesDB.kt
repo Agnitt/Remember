@@ -1,11 +1,8 @@
 package com.agnitt.remember.data.db
 
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.agnitt.remember.common.CATEGORY_DB_NAME
 import com.agnitt.remember.models.data.db.CategoryEntity
 
 @Database(entities = [CategoryEntity::class], version = 1)

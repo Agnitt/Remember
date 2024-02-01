@@ -2,7 +2,6 @@ package com.agnitt.remember.models.data.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.agnitt.remember.common.FIELD_ITEM_ARCHIVED
@@ -15,7 +14,6 @@ import com.agnitt.remember.common.FIELD_ITEM_ID
 import com.agnitt.remember.common.FIELD_ITEM_PER_DAY_QUANTITY
 import com.agnitt.remember.common.FIELD_ITEM_PER_TIME_QUANTITY
 import com.agnitt.remember.common.FIELD_ITEM_TITLE
-import com.agnitt.remember.common.FIELD_CATEGORY_ID
 import com.agnitt.remember.common.ITEM_TABLE_NAME
 import java.io.Serializable
 
