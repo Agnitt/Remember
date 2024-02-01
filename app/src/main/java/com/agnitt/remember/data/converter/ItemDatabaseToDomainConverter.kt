@@ -2,8 +2,9 @@ package com.agnitt.remember.data.converter
 
 import com.agnitt.remember.models.data.db.ItemEntity
 import com.agnitt.remember.models.domain.Item
+import javax.inject.Inject
 
-internal class ItemDatabaseToDomainConverter {
+class ItemDatabaseToDomainConverter @Inject constructor() {
 
     fun convert(from: ItemEntity): Item = Item(
         title = from.title,
