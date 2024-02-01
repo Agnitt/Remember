@@ -9,16 +9,17 @@ import com.agnitt.remember.domain.converter.CategoryDomainToDatabaseConverter
 import com.agnitt.remember.models.domain.Category
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-internal class CategoryRepositoryImpl(
+class CategoryRepositoryImpl @Inject constructor(
     private val categoryDao: CategoryDao,
     private val fromDBConverter: CategoryDatabaseToDomainConverter,
     private val toDBConverter: CategoryDomainToDatabaseConverter,
-    private val dispatchers: Dispatchers
 ) : CategoryRepository {
 
+    private val dio = Dispatchers.IO
     override suspend fun add(category: Category, replace: Boolean) {
-        withContext(dispatchers.IO) {
+        withContext(dio) {
             toDBConverter.convert(category).let {
                 if (replace) {
                     categoryDao.insertWithReplace(it)
@@ -29,18 +30,18 @@ internal class CategoryRepositoryImpl(
         }
     }
 
-    override suspend fun get(categoryID: Long) = withContext(dispatchers.IO) {
+    override suspend fun get(categoryID: Long) = withContext(dio) {
         categoryDao.getByID(categoryID).let(fromDBConverter::convert)
     }
 
     override suspend fun update(category: Category) {
-        withContext(dispatchers.IO) {
+        withContext(dio) {
             toDBConverter.convert(category).let { categoryDao.update(it) }
         }
     }
 
     override suspend fun update(categoryID: Long, title: String?, color: Color?, iconID: Int?) {
-        withContext(dispatchers.IO) {
+        withContext(dio) {
             title?.let { categoryDao.updateTitle(categoryID, it) }
             color?.toArgb()?.let { categoryDao.updateColor(categoryID, it) }
             iconID?.let { categoryDao.updateIcon(categoryID, it) }
@@ -48,13 +49,13 @@ internal class CategoryRepositoryImpl(
     }
 
     override suspend fun delete(categoryID: Long) {
-        withContext(dispatchers.IO) {
+        withContext(dio) {
             categoryDao.deleteByID(categoryID)
         }
     }
 
     override suspend fun deleteAll() {
-        withContext(dispatchers.IO) {
+        withContext(dio) {
             categoryDao.clearAll()
         }
     }

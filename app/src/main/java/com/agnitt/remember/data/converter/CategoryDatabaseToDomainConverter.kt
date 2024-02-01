@@ -3,8 +3,9 @@ package com.agnitt.remember.data.converter
 import androidx.compose.ui.graphics.Color
 import com.agnitt.remember.models.data.db.CategoryEntity
 import com.agnitt.remember.models.domain.Category
+import javax.inject.Inject
 
-internal class CategoryDatabaseToDomainConverter {
+class CategoryDatabaseToDomainConverter @Inject constructor() {
 
     fun convert(from: CategoryEntity): Category = Category(
         innerID = from.innerID,

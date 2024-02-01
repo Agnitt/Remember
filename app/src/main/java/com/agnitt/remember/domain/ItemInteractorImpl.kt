@@ -1,10 +1,9 @@
 package com.agnitt.remember.domain
 
 import com.agnitt.remember.models.domain.Item
-import java.util.Calendar
-import java.util.Date
+import javax.inject.Inject
 
-internal class ItemInteractorImpl(
+class ItemInteractorImpl @Inject constructor(
     private val itemRepository: ItemsRepository
 ) : ItemInteractor {
     override suspend fun add(item: Item) = itemRepository.add(item)
