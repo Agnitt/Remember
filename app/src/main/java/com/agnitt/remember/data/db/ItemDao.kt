@@ -118,7 +118,7 @@ interface ItemDao {
     @Query("SELECT EXISTS (SELECT * FROM $ITEM_TABLE_NAME WHERE $FIELD_ITEM_TITLE = :title)")
     suspend fun exist(title: String): Boolean
 
-    @Query("SELECT COUNT($FIELD_ITEM_CATEGORY_ID) FROM $ITEM_TABLE_NAME")
+    @Query("SELECT COUNT($FIELD_ITEM_CATEGORY_ID) FROM $ITEM_TABLE_NAME WHERE $FIELD_ITEM_CATEGORY_ID = :categoryID")
     suspend fun countByCategory(categoryID: Long): Int
 
     @Query(

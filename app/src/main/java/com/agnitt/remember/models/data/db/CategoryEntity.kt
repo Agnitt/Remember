@@ -20,13 +20,9 @@ import java.io.Serializable
     ]
 )
 data class CategoryEntity(
+    @ColumnInfo(name = FIELD_CATEGORY_ID) @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = FIELD_CATEGORY_INNER_ID) val innerID: Long,
     @ColumnInfo(name = FIELD_CATEGORY_TITLE) val title: String,
     @ColumnInfo(name = FIELD_CATEGORY_COLOR) val color: Int,
     @ColumnInfo(name = FIELD_CATEGORY_ICON_ID) val iconId: Int
-) : Serializable {
-
-    @ColumnInfo(name = FIELD_CATEGORY_ID)
-    @PrimaryKey(autoGenerate = true)
-    val id: Long? = null
-}
+) : Serializable

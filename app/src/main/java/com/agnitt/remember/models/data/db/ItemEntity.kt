@@ -34,18 +34,13 @@ import java.io.Serializable
  */
 @Entity(
     tableName = ITEM_TABLE_NAME,
-    foreignKeys = [ForeignKey(
-        entity = CategoryEntity::class,
-        parentColumns = arrayOf(FIELD_CATEGORY_ID),
-        childColumns = arrayOf(FIELD_ITEM_CATEGORY_ID),
-        onDelete = ForeignKey.CASCADE
-    )],
     indices = [
         Index(value = [FIELD_ITEM_ID]),
         Index(value = [FIELD_ITEM_TITLE], unique = true)
     ]
 )
 data class ItemEntity(
+    @ColumnInfo(name = FIELD_ITEM_ID) @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = FIELD_ITEM_TITLE) val title: String,
     @ColumnInfo(name = FIELD_ITEM_CATEGORY_ID) val categoryID: Long?,
     @ColumnInfo(name = FIELD_ITEM_CURRENT_QUANTITY) val currentQuantity: Int,
@@ -55,8 +50,4 @@ data class ItemEntity(
     @ColumnInfo(name = FIELD_ITEM_DATE_FROM) val dateFrom: Long,
     @ColumnInfo(name = FIELD_ITEM_DATE_TO) val dateTo: Long,
     @ColumnInfo(name = FIELD_ITEM_ARCHIVED) val archived: Boolean
-): Serializable {
-
-    @ColumnInfo(name = FIELD_ITEM_ID) @PrimaryKey(autoGenerate = true)
-    val id: Long? = null
-}
+) : Serializable
