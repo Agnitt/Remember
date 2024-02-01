@@ -1,5 +1,6 @@
 package com.agnitt.remember.data.db
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -17,7 +18,6 @@ import com.agnitt.remember.common.FIELD_ITEM_PER_TIME_QUANTITY
 import com.agnitt.remember.common.FIELD_ITEM_TITLE
 import com.agnitt.remember.common.ITEM_TABLE_NAME
 import com.agnitt.remember.models.data.db.ItemEntity
-import android.database.sqlite.SQLiteConstraintException
 
 @Dao
 interface ItemDao {
