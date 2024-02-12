@@ -12,6 +12,10 @@ interface CategoryRepository {
 
     suspend fun get(categoryID: Long): Category
 
+    suspend fun get(title: String): Category
+
+    suspend fun getAll(): List<Category>
+
     suspend fun update(category: Category)
 
     suspend fun update(
@@ -22,6 +26,8 @@ interface CategoryRepository {
     )
 
     suspend fun delete(categoryID: Long)
+
+    suspend fun delete(title: String)
 
     suspend fun deleteAll()
 }

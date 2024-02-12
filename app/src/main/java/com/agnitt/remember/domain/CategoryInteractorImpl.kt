@@ -8,43 +8,33 @@ class CategoryInteractorImpl @Inject constructor(
     private val categoryRepository: CategoryRepository
 ) : CategoryInteractor {
     override suspend fun add(category: Category) {
-        TODO("Not yet implemented")
+        categoryRepository.add(category, true)
     }
 
-    override suspend fun get(title: String): Category {
-        TODO("Not yet implemented")
-    }
+    override suspend fun get(title: String): Category = categoryRepository.get(title)
 
-    override suspend fun get(id: Long): Category {
-        TODO("Not yet implemented")
-    }
+    override suspend fun get(id: Long): Category = categoryRepository.get(id)
 
-    override suspend fun getAll(): List<Category> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getAll(): List<Category> = categoryRepository.getAll()
 
     override suspend fun update(category: Category) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun update(title: String, newTitle: String?, color: Color?, iconID: Int?) {
-        TODO("Not yet implemented")
+        categoryRepository.update(category)
     }
 
     override suspend fun update(innerID: Long, title: String?, color: Color?, iconID: Int?) {
-        TODO("Not yet implemented")
+        categoryRepository.update(innerID, title, color, iconID)
     }
 
     override suspend fun delete(title: String) {
-        TODO("Not yet implemented")
+        categoryRepository.delete(title)
     }
 
     override suspend fun delete(id: Long) {
-        TODO("Not yet implemented")
+        categoryRepository.delete(id)
     }
 
     override suspend fun deleteAll() {
-        TODO("Not yet implemented")
+        categoryRepository.deleteAll()
     }
 
 

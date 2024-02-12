@@ -6,7 +6,7 @@ import javax.inject.Inject
 class ItemInteractorImpl @Inject constructor(
     private val itemRepository: ItemsRepository
 ) : ItemInteractor {
-    override suspend fun add(item: Item) = itemRepository.add(item)
+    override suspend fun add(item: Item) = itemRepository.add(item, true)
 
     override suspend fun get(title: String): Item = itemRepository.getItemByTitle(title)
 

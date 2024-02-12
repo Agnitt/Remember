@@ -18,13 +18,6 @@ interface CategoryInteractor {
     suspend fun update(category: Category)
 
     suspend fun update(
-        title: String,
-        newTitle: String? = null,
-        color: Color? = null,
-        iconID: Int? = null
-    )
-
-    suspend fun update(
         innerID: Long,
         title: String? = null,
         color: Color? = null,

@@ -34,6 +34,14 @@ class CategoryRepositoryImpl @Inject constructor(
         categoryDao.getByID(categoryID).let(fromDBConverter::convert)
     }
 
+    override suspend fun get(title: String): Category = withContext(dio) {
+        categoryDao.getByTitle(title).let(fromDBConverter::convert)
+    }
+
+    override suspend fun getAll(): List<Category> = withContext(dio) {
+        categoryDao.getAllOrderByID().map(fromDBConverter::convert)
+    }
+
     override suspend fun update(category: Category) {
         withContext(dio) {
             toDBConverter.convert(category).let { categoryDao.update(it) }
@@ -51,6 +59,12 @@ class CategoryRepositoryImpl @Inject constructor(
     override suspend fun delete(categoryID: Long) {
         withContext(dio) {
             categoryDao.deleteByID(categoryID)
+        }
+    }
+
+    override suspend fun delete(title: String) {
+        withContext(dio) {
+            categoryDao.deleteByTitle(title)
         }
     }
 
