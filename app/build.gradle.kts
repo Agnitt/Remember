@@ -21,6 +21,22 @@ android {
         }
     }
 
+    flavorDimensions += "mode"
+    productFlavors {
+        create("demo") {
+            applicationIdSuffix = ".dm"
+            dimension = "mode"
+        }
+        create("free") {
+            applicationIdSuffix = ".fr"
+            dimension = "mode"
+        }
+        create("paid") {
+            applicationIdSuffix = ".pd"
+            dimension = "mode"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
