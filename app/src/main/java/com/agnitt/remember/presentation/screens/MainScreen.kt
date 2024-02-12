@@ -49,3 +49,7 @@ fun MainScreen(isDarkThemeState: MutableState<Boolean>) {
         }
     }
 }
+
+
+@Composable
+fun MainScreenShimmer(isDarkTheme: Boolean) {}
