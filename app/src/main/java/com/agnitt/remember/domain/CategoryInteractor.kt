@@ -11,7 +11,7 @@ interface CategoryInteractor {
 
     suspend fun get(title: String): Category
 
-    suspend fun get(id: Long): Category
+    suspend fun get(id: Long?): Category
 
     suspend fun getAll(): List<Category>
 

@@ -13,7 +13,8 @@ class CategoryInteractorImpl @Inject constructor(
 
     override suspend fun get(title: String): Category = categoryRepository.get(title)
 
-    override suspend fun get(id: Long): Category = categoryRepository.get(id)
+    override suspend fun get(id: Long?): Category =
+        id?.let { categoryRepository.get(it) } ?: categoryRepository.getRootCategory()
 
     override suspend fun getAll(): List<Category> = categoryRepository.getAll()
 

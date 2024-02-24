@@ -30,6 +30,10 @@ class CategoryRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getRootCategory(): Category {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun get(categoryID: Long) = withContext(dio) {
         categoryDao.getByID(categoryID).let(fromDBConverter::convert)
     }

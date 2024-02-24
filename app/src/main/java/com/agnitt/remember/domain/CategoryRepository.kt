@@ -3,12 +3,13 @@ package com.agnitt.remember.domain
 import android.database.sqlite.SQLiteConstraintException
 import androidx.compose.ui.graphics.Color
 import com.agnitt.remember.models.domain.Category
-import com.agnitt.remember.models.domain.Item
 
 interface CategoryRepository {
 
     /** @throws SQLiteConstraintException если есть категория с таким же тайтлом или id и флаг replace false */
     suspend fun add(category: Category, replace: Boolean = false)
+
+    suspend fun getRootCategory(): Category
 
     suspend fun get(categoryID: Long): Category
 
