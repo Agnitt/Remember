@@ -16,6 +16,7 @@ import com.agnitt.remember.common.FIELD_ITEM_PER_TIME_QUANTITY
 import com.agnitt.remember.common.FIELD_ITEM_TITLE
 import com.agnitt.remember.common.ITEM_TABLE_NAME
 import java.io.Serializable
+import java.time.LocalDateTime
 
 /**
  * Модель айтема для дб
@@ -45,7 +46,7 @@ data class ItemEntity(
     @ColumnInfo(name = FIELD_ITEM_PER_TIME_QUANTITY) val perTimeQuantity: Int,
     @ColumnInfo(name = FIELD_ITEM_PER_DAY_QUANTITY) val perDayQuantity: Int,
     @ColumnInfo(name = FIELD_ITEM_DAILY_FACTOR) val dailyFactor: Int,
-    @ColumnInfo(name = FIELD_ITEM_DATE_FROM) val dateFrom: Long,
-    @ColumnInfo(name = FIELD_ITEM_DATE_TO) val dateTo: Long,
+    @ColumnInfo(name = FIELD_ITEM_DATE_FROM) val dateFrom: LocalDateTime,
+    @ColumnInfo(name = FIELD_ITEM_DATE_TO) val dateTo: LocalDateTime,
     @ColumnInfo(name = FIELD_ITEM_ARCHIVED) val archived: Boolean
 ) : Serializable

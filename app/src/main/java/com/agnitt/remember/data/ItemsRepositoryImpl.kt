@@ -8,6 +8,7 @@ import com.agnitt.remember.models.data.db.ItemEntity
 import com.agnitt.remember.models.domain.Item
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class ItemsRepositoryImpl @Inject constructor(
@@ -67,7 +68,7 @@ class ItemsRepositoryImpl @Inject constructor(
     override suspend fun updateCurrentQuantity(
         title: String,
         currentQuantity: String,
-        dateTo: Long
+        dateTo: LocalDateTime
     ) {
         withContext(dio) {
             itemsDao.updateCurrentQuantity(title, currentQuantity, dateTo)
@@ -78,7 +79,7 @@ class ItemsRepositoryImpl @Inject constructor(
         title: String,
         perTime: Int,
         perDay: Int,
-        dateTo: Long
+        dateTo: LocalDateTime
     ) {
         withContext(dio) {
             itemsDao.updatePerTimeQuantity(title, perTime, perDay, dateTo)
@@ -89,7 +90,7 @@ class ItemsRepositoryImpl @Inject constructor(
         title: String,
         dailyFactor: Int,
         perDay: Int,
-        dateTo: Long
+        dateTo: LocalDateTime
     ) {
         withContext(dio) {
             itemsDao.updateDailyFactor(title, dailyFactor, perDay, dateTo)

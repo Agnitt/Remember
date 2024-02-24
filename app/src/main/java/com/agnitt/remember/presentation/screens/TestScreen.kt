@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -45,141 +46,143 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.agnitt.remember.R
 import com.agnitt.remember.presentation.components.ActionButton
-import com.agnitt.remember.presentation.theme.RememberTheme
 import com.agnitt.remember.presentation.viewmodels.MainViewModel
 
 @Composable
 fun TestScreen(viewModel: MainViewModel) {
 
-        Column(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        horizontalAlignment = Alignment.Start
+    ) {
+
+        var isItemsShow by remember { mutableStateOf(true) }
+        var addItem by remember { mutableStateOf(false) }
+        var isCatsShow by remember { mutableStateOf(true) }
+        var addCat by remember { mutableStateOf(false) }
+
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            horizontalAlignment = Alignment.Start
+                .fillMaxWidth()
+                .padding(20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
         ) {
 
-            var isItemsShow by remember { mutableStateOf(true) }
-            var addItem by remember { mutableStateOf(false) }
-            var isCatsShow by remember { mutableStateOf(true) }
-            var addCat by remember { mutableStateOf(false) }
+            ActionButton(viewModel.isDarkTheme)
+
+
+            IconButton(onClick = {
+                viewModel.clear()
+                isItemsShow = false
+                isCatsShow = false
+            }) {
+                Icon(
+                    Icons.Default.Delete,
+                    "",
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+        }
+
+
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ) {
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
+                    .height(40.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
-                ActionButton(viewModel.isDarkTheme)
-
-
-                IconButton(onClick = {
-                    viewModel.clear()
-                    isItemsShow = false
-                    isCatsShow = false
-                }) {
+                ToggleButton(
+                    state = viewModel.showItemsList,
+                    iconOn = R.drawable.visibility_off,
+                    iconOff = R.drawable.visibility,
+                    modifier = Modifier
+                        .weight(1.5f)
+                )
+                Text(
+                    modifier = Modifier.weight(7f),
+                    text = "Items",
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    textAlign = TextAlign.Center
+                )
+                IconButton(onClick = { /*TODO*/ }) {
                     Icon(
-                        Icons.Default.Delete,
-                        "",
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer
+                        imageVector = Icons.Default.Add,
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                        contentDescription = ""
                     )
                 }
             }
 
+            AnimatedVisibility(addItem) {
+                InputText("New item") { text -> viewModel.addItem(text) }
+            }
 
-            Column(
-                modifier = Modifier.padding(10.dp)
+            AnimatedVisibility(viewModel.showItemsList.value) {
+                ElementsList(
+                    viewModel.items.value.associate { item ->
+                        item.title to { viewModel.openItemCard(item.title) }
+                    }
+                )
+            }
+        }
+
+
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    ToggleButton(
-                        state = viewModel.showItemsList,
-                        iconOn = R.drawable.visibility_off,
-                        iconOff = R.drawable.visibility,
-                        modifier = Modifier.weight(1.5f)
-                    )
+                ToggleButton(
+                    state = viewModel.showCatsList,
+                    iconOn = R.drawable.visibility_off,
+                    iconOff = R.drawable.visibility,
+                    modifier = Modifier.weight(1.5f)
+                )
+                TextButton(
+                    modifier = Modifier.weight(7f),
+                    onClick = { }) {
                     Text(
-                        modifier = Modifier.weight(7f),
-                        text = "Items",
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        textAlign = TextAlign.Center
+                        "Categories",
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
                     )
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                            contentDescription = ""
-                        )
-                    }
                 }
-
-                AnimatedVisibility(addItem) {
-                    InputText("New item") { text -> viewModel.addItemName(text) }
-                }
-
-                AnimatedVisibility(viewModel.showItemsList.value) {
-                    ElementsList(
-                        viewModel.items.value.associate { item ->
-                            item.title to { viewModel.openItemCard(item.title) }
-                        }
+                IconToggleButton(
+                    modifier = Modifier.weight(1.5f),
+                    checked = addCat,
+                    onCheckedChange = { addCat = !addCat }) {
+                    Icon(
+                        imageVector = if (addCat) Icons.Default.Close else Icons.Default.Add,
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                        contentDescription = ""
                     )
                 }
             }
 
+            AnimatedVisibility(addCat) {
+                InputText("New category") { text -> viewModel.addCategoryName(text) }
+            }
 
-            Column(
-                modifier = Modifier.padding(10.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    ToggleButton(
-                        state = viewModel.showCatsList,
-                        iconOn = R.drawable.visibility_off,
-                        iconOff = R.drawable.visibility,
-                        modifier = Modifier.weight(1.5f)
-                    )
-                    TextButton(
-                        modifier = Modifier.weight(7f),
-                        onClick = { }) {
-                        Text(
-                            "Categories",
-                            color = MaterialTheme.colorScheme.onSecondaryContainer
-                        )
+            AnimatedVisibility(viewModel.showCatsList.value) {
+                ElementsList(
+                    viewModel.categories.value.associate { cat ->
+                        cat.title to { viewModel.openCatCard(cat.innerID) }
                     }
-                    IconToggleButton(
-                        modifier = Modifier.weight(1.5f),
-                        checked = addCat,
-                        onCheckedChange = { addCat = !addCat }) {
-                        Icon(
-                            imageVector = if (addCat) Icons.Default.Close else Icons.Default.Add,
-                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                            contentDescription = ""
-                        )
-                    }
-                }
-
-                AnimatedVisibility(addCat) {
-                    InputText("New category") { text -> viewModel.addCategoryName(text) }
-                }
-
-                AnimatedVisibility(viewModel.showCatsList.value) {
-                    ElementsList(
-                        viewModel.categories.value.associate { cat ->
-                            cat.title to { viewModel.openCatCard(cat.innerID) }
-                        }
-                    )
-                }
+                )
             }
         }
     }
+}
 
 
 @Composable
@@ -189,7 +192,9 @@ fun ElementsList(content: Map<String, () -> Unit>) {
             item {
                 ElevatedButton(
                     onClick = it.value,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .padding(30.dp)
+                        .fillMaxWidth()
                 ) {
                     Text(
                         text = it.key,

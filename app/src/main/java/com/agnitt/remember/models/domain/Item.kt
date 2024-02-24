@@ -1,5 +1,7 @@
 package com.agnitt.remember.models.domain
 
+import java.time.LocalDateTime
+
 /**
  * Модель айтема
  *
@@ -20,7 +22,7 @@ data class Item(
     val perTimeQuantity: Int,
     val perDayQuantity: Int,
     val dailyFactor: Int,
-    val dateFrom: Long,
-    val dateTo: Long,
+    val dateFrom: LocalDateTime,
+    val dateTo: LocalDateTime,
     val archived: Boolean
 )

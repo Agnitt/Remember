@@ -18,6 +18,7 @@ import com.agnitt.remember.common.FIELD_ITEM_PER_TIME_QUANTITY
 import com.agnitt.remember.common.FIELD_ITEM_TITLE
 import com.agnitt.remember.common.ITEM_TABLE_NAME
 import com.agnitt.remember.models.data.db.ItemEntity
+import java.time.LocalDateTime
 
 @Dao
 interface ItemDao {
@@ -74,7 +75,7 @@ interface ItemDao {
                 "$FIELD_ITEM_DATE_TO = :dateTo " +
                 "WHERE $FIELD_ITEM_TITLE = :title"
     )
-    suspend fun updateCurrentQuantity(title: String, currentQuantity: String, dateTo: Long)
+    suspend fun updateCurrentQuantity(title: String, currentQuantity: String, dateTo: LocalDateTime)
 
     @Query(
         "UPDATE $ITEM_TABLE_NAME SET " +
@@ -83,7 +84,12 @@ interface ItemDao {
                 "$FIELD_ITEM_DATE_TO = :dateTo " +
                 "WHERE $FIELD_ITEM_TITLE = :title"
     )
-    suspend fun updatePerTimeQuantity(title: String, perTime: Int, perDay: Int, dateTo: Long)
+    suspend fun updatePerTimeQuantity(
+        title: String,
+        perTime: Int,
+        perDay: Int,
+        dateTo: LocalDateTime
+    )
 
     @Query(
         "UPDATE $ITEM_TABLE_NAME SET " +
@@ -92,7 +98,12 @@ interface ItemDao {
                 "$FIELD_ITEM_DATE_TO = :dateTo " +
                 "WHERE $FIELD_ITEM_TITLE = :title"
     )
-    suspend fun updateDailyFactor(title: String, dailyFactor: Int, perDay: Int, dateTo: Long)
+    suspend fun updateDailyFactor(
+        title: String,
+        dailyFactor: Int,
+        perDay: Int,
+        dateTo: LocalDateTime
+    )
 
     //endregion
 

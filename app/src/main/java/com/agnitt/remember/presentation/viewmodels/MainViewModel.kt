@@ -17,6 +17,7 @@ import com.agnitt.remember.models.presentation.Dialog
 import com.agnitt.remember.models.presentation.MainScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -32,13 +33,16 @@ class MainViewModel @Inject constructor(
     private val _window: MutableState<AdditionalWindow> = mutableStateOf(AdditionalWindow.Nothing)
 
     /** Состояние отрисовки экрана */
-    val state: State<MainScreenState> = _state
+    val state: State<MainScreenState>
+        get() = _state
 
     /** Диалоги */
-    val dialog: State<Dialog> = _dialog
+    val dialog: State<Dialog>
+        get() = _dialog
 
     /** Дополнительные окна поверх основного */
-    val window: State<AdditionalWindow> = _window
+    val window: State<AdditionalWindow>
+        get() = _window
 
     val isDarkTheme = mutableStateOf(false) // add dynamic
     val items: MutableState<List<Item>> = mutableStateOf(listOf<Item>())
@@ -77,18 +81,25 @@ class MainViewModel @Inject constructor(
         categories.value = categoryInteractor.getAll()
     }
 
-    fun addItemName(itemName: String) {
-        if (itemName.isNotBlank())
+    fun addItem(
+        title: String,
+        category: Category? = null,
+        currentQuantity: Int = 0,
+        perTimeQuantity: Int = 0,
+        perDayQuantity: Int = 0,
+        dailyFactor: Int = 1
+    ) {
+        if (title.isNotBlank())
             viewModelScope.launch {
                 itemInteractor.add(
                     Item(
-                        title = itemName,
+                        title = title,
                         currentQuantity = 378,
                         perTimeQuantity = 378,
                         perDayQuantity = 378,
                         dailyFactor = 378,
-                        dateFrom = 378,
-                        dateTo = 378,
+                        dateFrom = LocalDateTime.MIN,
+                        dateTo = LocalDateTime.MAX,
                         archived = false
                     )
                 )

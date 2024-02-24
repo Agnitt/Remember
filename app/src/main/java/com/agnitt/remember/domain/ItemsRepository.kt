@@ -1,7 +1,8 @@
 package com.agnitt.remember.domain
 
-import com.agnitt.remember.models.domain.Item
 import android.database.sqlite.SQLiteConstraintException
+import com.agnitt.remember.models.domain.Item
+import java.time.LocalDateTime
 
 interface ItemsRepository {
 
@@ -14,9 +15,21 @@ interface ItemsRepository {
     suspend fun getByCategory(categoryID: Long): List<Item>
     suspend fun update(item: Item)
     suspend fun updateFields(title: String, newTitle: String? = null, categoryID: Long? = null)
-    suspend fun updateCurrentQuantity(title: String, currentQuantity: String, dateTo: Long)
-    suspend fun updatePerTimeQuantity(title: String, perTime: Int, perDay: Int, dateTo: Long)
-    suspend fun updateDailyFactor(title: String, dailyFactor: Int, perDay: Int, dateTo: Long)
+    suspend fun updateCurrentQuantity(title: String, currentQuantity: String, dateTo: LocalDateTime)
+    suspend fun updatePerTimeQuantity(
+        title: String,
+        perTime: Int,
+        perDay: Int,
+        dateTo: LocalDateTime
+    )
+
+    suspend fun updateDailyFactor(
+        title: String,
+        dailyFactor: Int,
+        perDay: Int,
+        dateTo: LocalDateTime
+    )
+
     suspend fun delete(item: Item)
     suspend fun deleteByTitle(title: String)
     suspend fun deleteByCategory(categoryID: Long)
